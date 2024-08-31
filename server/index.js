@@ -10,7 +10,7 @@ const io = new Server(server, {
 
 const roomsName = new Map();
 let chatSave = new Map();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 io.on("connection", (socket) => {
     console.log("Socket connected:", socket.id);
 
@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
 
         if (roomsNameArray) {
             roomsNameArray.forEach(socketId => {
-                io.to(socketId).emit("chat", payload.chat);
+                io.to(socketId).emit("chat", {chat:payload.chat,clientId: payload.clientId});
             });
         }
     });
